@@ -6,23 +6,19 @@
 #include "Decrypt_mode.h"
 
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]){
     int mode;
     srand(time(NULL));
     printf("(1)ECB\n(2)CBC\n(3)CTR\n(4)CFB-8\n(5)CFB-1\n(6)OFB-8\n(7)OFB-1\n");
     printf("Mode:");
     scanf("%d", &mode);
-
-    if (argc == 1)
-    {
+    if (argc == 1){
         printf("Input one argument for encryption or two for decryption!");
         return 0;
     }
-    if (argc == 2)
-    {
-        switch (mode)
-        {
+    //argc=2 encrypt
+    if (argc == 2){
+        switch (mode){
         case 1:
             ECB_en(argv[1]);
             break;
@@ -48,10 +44,9 @@ int main(int argc, char *argv[])
             printf("fail");
         }
     }
-    if (argc == 3)
-    {
-        switch (mode)
-        {
+    //argc=3 decrypt
+    if (argc == 3){
+        switch (mode){
         case 1:
             ECB_de(argv[1], argv[2]);
             break;

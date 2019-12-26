@@ -1,9 +1,7 @@
 #include "bit_operation.h"
 
-void cleanbuffer(unsigned char *buffer)
-{
-    for (int i = 0; i < 16; i++)
-    {
+void cleanbuffer(unsigned char *buffer){
+    for (int i = 0; i < 16; i++){
         *(buffer + i) = 0x00;
     }
 }

@@ -15,8 +15,7 @@ void ECB_en(char *file){
     printf("Key length:");
     scanf("%d", &keylen);
 
-    switch (keylen)
-    {
+    switch (keylen){
     case 1:
         N = 4;
         break;
@@ -32,21 +31,17 @@ void ECB_en(char *file){
     key_state = (char *)malloc(sizeof(char *) * 16 * (7 + N));
 
     key = fopen("randomKey", "w+");
-    for (i = 0; i < 4 * N; i++)
-    {
+    for (i = 0; i < 4 * N; i++){
         *(key_state + i) = rand() % 256;
         fwrite(key_state + i, 1, 1, key);
     }
     KeySchedule(key_state, N);
 
-    while (end_flag)
-    {
+    while (end_flag){
         cleanbuffer(state);
-        for (i = 0; i < 16; i++)
-        {
+        for (i = 0; i < 16; i++){
             fread(state + i, 1, 1, origin_data);
-            if (feof(origin_data))
-            {
+            if (feof(origin_data)){
                 end_flag = 0;
                 index = i;
                 fwrite(&index, 1, 1, key);
@@ -57,8 +52,7 @@ void ECB_en(char *file){
                 break;
             }
         }
-        if (exit_flag == 1)
-        {
+        if (exit_flag == 1){
             break;
         }
         AES_encrypt(state, key_state, N);
@@ -79,13 +73,11 @@ void CBC_en(char *file){
     scanf("%d", &keylen);
     Initial_Vector = fopen("IV", "w+");
     IV = (char *)malloc(sizeof(char) * 16);
-    for (i = 0; i < 16; i++)
-    {
+    for (i = 0; i < 16; i++){
         *(IV + i) = rand() % 256;
     }
     fwrite(IV, 16, 1, Initial_Vector);
-    switch (keylen)
-    {
+    switch (keylen){
     case 1:
         N = 4;
         break;
@@ -101,43 +93,35 @@ void CBC_en(char *file){
     key_state = (char *)malloc(sizeof(char *) * 16 * (7 + N));
 
     key = fopen("randomKey", "w+");
-    for (i = 0; i < 4 * N; i++)
-    {
+    for (i = 0; i < 4 * N; i++){
         *(key_state + i) = rand() % 256;
         fwrite(key_state + i, 1, 1, key);
     }
     KeySchedule(key_state, N);
 
-    while (end_flag)
-    {
+    while (end_flag){
         cleanbuffer(state);
-        for (i = 0; i < 16; i++)
-        {
+        for (i = 0; i < 16; i++){
             fread(state + i, 1, 1, origin_data);
-            if (feof(origin_data))
-            {
+            if (feof(origin_data)){
                 end_flag = 0;
                 index = i;
                 fwrite(&index, 1, 1, key);
-                if (i == 0)
-                {
+                if (i == 0){
                     exit_flag = 1;
                 }
                 break;
             }
         }
-        if (exit_flag)
-        {
+        if (exit_flag){
             break;
         }
-        for (i = 0; i < 16; i++)
-        {
+        for (i = 0; i < 16; i++){
             *(state + i) = *(state + i) ^ *(IV + i);
         }
         AES_encrypt(state, key_state, N);
         fwrite(state, 16, 1, output);
-        for (i = 0; i < 16; i++)
-        {
+        for (i = 0; i < 16; i++){
             *(IV + i) = *(state + i);
         }
     }
@@ -154,8 +138,7 @@ void CTR_en(char *file){
     printf("\n(1)128\n(2)192\n(3)256\n");
     printf("Key length:");
     scanf("%d", &keylen);
-    switch (keylen)
-    {
+    switch (keylen){
     case 1:
         N = 4;
         break;
@@ -169,8 +152,7 @@ void CTR_en(char *file){
     Initial_Vector = fopen("IV", "w+");
     IV = (char *)malloc(sizeof(char) * 16);
     temp_IV = (char *)malloc(sizeof(char) * 16);
-    for (i = 0; i < 16; i++)
-    {
+    for (i = 0; i < 16; i++){
         *(IV + i) = rand() % 256;
     }
     fwrite(IV, 16, 1, Initial_Vector);
@@ -179,34 +161,28 @@ void CTR_en(char *file){
     key_state = (char *)malloc(sizeof(char *) * 16 * (7 + N));
 
     key = fopen("randomKey", "w+");
-    for (i = 0; i < 4 * N; i++)
-    {
+    for (i = 0; i < 4 * N; i++){
         *(key_state + i) = rand() % 256;
         fwrite(key_state + i, 1, 1, key);
     }
     KeySchedule(key_state, N);
 
-    while (end_flag)
-    {
+    while (end_flag){
         cleanbuffer(state);
-        for (i = 0; i < 16; i++)
-        {
+        for (i = 0; i < 16; i++){
             fread(state + i, 1, 1, origin_data);
-            if (feof(origin_data))
-            {
+            if (feof(origin_data)){
                 end_flag = 0;
                 index = i;
                 fwrite(&index, 1, 1, key);
-                if (i == 0)
-                {
+                if (i == 0){
                     exit_flag = 1;
                 }
                 break;
             }
         }
 
-        if (exit_flag)
-        {
+        if (exit_flag){
             break;
         }
 
