@@ -12,12 +12,13 @@ void InvShiftRows(unsigned char *state);    //shift state
 //other operations
 unsigned char Mix_mul2(unsigned char target);   //Gf2 multiple 2
 void KeySchedule(unsigned char *key, int N);    //Generate key
+void CreateInvKey(unsigned char *key, int N);   //Generate InvKey
 
 //test function
 void show(unsigned char *state);             //Show state matrix or IV 
 void showkey(unsigned char *key, int N);     //Show all key(with N)
 
 //main operation function
-void AES_encrypt(char *state, char *key, int N);    //encrypt
-void AES_decrypt(char *state, char *key, int N);    //decrypt
+void AES_encrypt(unsigned char *state, char *key, int N,int fast);    //encrypt
+void AES_decrypt(unsigned char *state, char *key, int N,int fast);    //decrypt
 
